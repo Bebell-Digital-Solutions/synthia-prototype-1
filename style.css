@@ -26,7 +26,7 @@ body, html {
     radial-gradient(75% 60% at center, var(--bg-color) 50%, transparent 50%);
   padding: var(--p);
   position: absolute;
-  top: 35%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%) scale(1.2);
   border-radius: 50%;
