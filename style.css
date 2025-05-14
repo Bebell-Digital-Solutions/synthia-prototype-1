@@ -19,6 +19,7 @@ body, html {
   --s: clamp(18vmin, 30vmin, 40vmin);
   --p: calc(var(--s) / 4);
   --bg-color: rgba(123, 123, 244, 0.1);
+    overflow: hidden;
   width: var(--s);
   aspect-ratio: 1;
   background:
@@ -96,7 +97,10 @@ body, html {
 .glass {
   position: absolute;
   --w: 0.5vmin;
-  inset: var(--p); /* Changed from calc(var(--p) - var(--w)) to prevent overflow */
+  top: var(--p);
+  left: var(--p);
+  right: var(--p);
+  bottom: var(--p);
   border-radius: 50%;
   backdrop-filter: blur(1.3vmin);
   box-shadow: 0 0 8vmin rgba(0, 0, 0, 0.3);
@@ -125,17 +129,20 @@ body, html {
   to { --a: 0deg; --l: 0.35; --o: 1; }
 }
 
-@media (min-width: 768px) {
+
+ 
+
+@media (max-width: 768px) {
   .ai {
-    --s: 28vmin;
-    transform: translate(-50%, -50%) scale(1.1);
+     --s: 28vmin;
+    transform: translate(-50%, -50%) scale(1); /* Remove the scale on mobile */
   }
 
-  .c1, .c2, .c3, .c4 {
+
+   .c1, .c2, .c3, .c4 {
     width: 10vmin !important;
   }
-
   .glass {
-    --w: 0.4vmin;
+    backdrop-filter: blur(0.8vmin); /* Slightly reduce blur on mobile */
   }
 }
