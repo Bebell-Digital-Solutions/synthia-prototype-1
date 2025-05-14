@@ -96,12 +96,13 @@ body, html {
 .glass {
   position: absolute;
   --w: 0.5vmin;
-  inset: calc(var(--p) - var(--w));
+  inset: var(--p); /* Changed from calc(var(--p) - var(--w)) to prevent overflow */
   border-radius: 50%;
   backdrop-filter: blur(1.3vmin);
   box-shadow: 0 0 8vmin rgba(0, 0, 0, 0.3);
   background: radial-gradient(10vmin at 70% 30%, rgba(255, 255, 255, 0.7), transparent);
   z-index: 30;
+  border: var(--w) solid transparent; /* Added border to maintain visual effect */
 }
 
 .glass-overlay {
@@ -124,23 +125,17 @@ body, html {
   to { --a: 0deg; --l: 0.35; --o: 1; }
 }
 
-
-
-
 @media (min-width: 768px) {
   .ai {
-    --s: 28vmin; /* smaller size */
-    transform: translate(-50%, -50%) scale(1.1); /* smaller scale */
+    --s: 28vmin;
+    transform: translate(-50%, -50%) scale(1.1);
   }
 
   .c1, .c2, .c3, .c4 {
-    width: 10vmin !important; /* adjust orbiting circle sizes */
+    width: 10vmin !important;
   }
 
   .glass {
     --w: 0.4vmin;
   }
 }
-
-
-
