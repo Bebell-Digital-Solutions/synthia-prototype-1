@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Circle Animation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0d0d0d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+
+    .ai {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      background: linear-gradient(145deg, #3e1f91, #6e3ff5);
+      border-radius: 50%;
+      box-shadow: 0 0 25px rgba(179, 103, 255, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 28px;
+      font-weight: 600;
+      text-transform: uppercase;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .ai::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0.2) 100%
+      );
+      transform: rotate(0deg);
+      animation: shine 3s linear infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes shine {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ai">AI</div>
+</body>
+</html>
