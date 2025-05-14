@@ -126,5 +126,20 @@ body, html {
 
 
 
+@media (min-width: 768px) {
+  .ai {
+    --s: 28vmin; /* smaller size */
+    transform: translate(-50%, -50%) scale(1.1); /* smaller scale */
+  }
+
+  .c1, .c2, .c3, .c4 {
+    width: 10vmin !important; /* adjust orbiting circle sizes */
+  }
+
+  .glass {
+    --w: 0.4vmin;
+  }
+}
+
 
 
