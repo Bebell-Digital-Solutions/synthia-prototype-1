@@ -15,7 +15,7 @@ body, html {
 }
 
 .ai {
-  --s: 40vmin;
+  --s: clamp(18vmin, 30vmin, 40vmin);
   --p: calc(var(--s) / 4);
   --bg-color: rgba(123, 123, 244, 0.1);
   width: var(--s);
@@ -27,7 +27,7 @@ body, html {
   position: absolute;
   top: 35%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(1.4);
+  transform: translate(-50%, -50%) scale(1.2);
   border-radius: 50%;
   z-index: 20;
 }
