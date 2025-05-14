@@ -1,162 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Voice Reactive Animation</title>
-  <style>
-    @keyframes ai {
-      from { --a: 360deg; --l: 0.35; --o: 1; }
-      30% { --l: 1.5; }
-      70% { --o: 0.4; --l: 0.05; }
-      98% { --o: 0.7; }
-      to { --a: 0deg; --l: 0.35; --o: 1; }
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation</title>
+    <style>
+        /* Keyframe Animation */
+        @keyframes ai {
+            from { --a: 360deg; --l: 0.35; --o: 1; }
+            30% { --l: 1.5; }
+            70% { --o: 0.4; --l: 0.05; }
+            98% { --o: 0.7; }
+            to { --a: 0deg; --l: 0.35; --o: 1; }
+        }
 
-    .c {
-      --offset-per-item: calc(360deg / var(--count));
-      --current-angle-offset: calc(var(--offset-per-item) * var(--i) + var(--a));
-      translate: calc(cos(var(--current-angle-offset)) * var(--radius) + var(--x, 0)) calc(sin(var(--current-angle-offset)) * var(--radius) * -1);
-      scale: calc(0.6 + var(--l));
-      opacity: var(--o, 1);
-      transition: opacity 0.3s linear;
-    }
+        .ml-ai-wrapper {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background: #211f28;
+            overflow: hidden;
+            display: grid;
+            place-items: center;
+        }
 
-    .c4 { --i: 0; }
-    .c1 { --i: 1; }
-    .c2 { --i: 2; }
-    .c3 { --i: 3; }
+        .ai {
+            --s: 40vmin;
+            --p: calc(var(--s) / 4);
+            width: var(--s);
+            aspect-ratio: 1;
+            --bg-color: rgba(123, 123, 244, 0.1);
+            background: radial-gradient(60% 75% at center, var(--bg-color) 50%, transparent 50%),
+                        radial-gradient(75% 60% at center, var(--bg-color) 50%, transparent 50%);
+            padding: var(--p);
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.4);
+            border-radius: 50%;
+            z-index: 20;
+        }
 
-    body {
-      margin: 0;
-      background: #211f28;
-      display: grid;
-      place-items: center;
-      height: 100vh;
-    }
+        .container {
+            overflow: hidden;
+            background: #b6a9f8;
+            width: 100%;
+            border-radius: 50%;
+            aspect-ratio: 1;
+            position: relative;
+            display: grid;
+            place-items: center;
+        }
 
-    .ai {
-      --s: 40vmin;
-      --p: calc(var(--s) / 4);
-      --bg-color: rgba(123, 123, 244, 0.1);
-      width: var(--s);
-      aspect-ratio: 1;
-      background: radial-gradient(60% 75% at center, var(--bg-color) 50%, transparent 50%),
-                  radial-gradient(75% 60% at center, var(--bg-color) 50%, transparent 50%);
-      padding: var(--p);
-      position: relative;
-      border-radius: 50%;
-    }
+        .c {
+            --offset-per-item: calc(360deg / var(--count));
+            --current-angle-offset: calc(var(--offset-per-item) * var(--i) + var(--a));
+            translate: calc(cos(var(--current-angle-offset)) * var(--radius) + var(--x, 0)) 
+                      calc(sin(var(--current-angle-offset)) * var(--radius) * -1);
+            scale: calc(0.6 + var(--l));
+            opacity: var(--o, 1);
+            transition: opacity 0.3s linear;
+        }
 
-    .container {
-      overflow: hidden;
-      background: #b6a9f8;
-      width: 100%;
-      border-radius: 50%;
-      aspect-ratio: 1;
-      position: relative;
-      display: grid;
-      place-items: center;
-    }
+        .c4 { --i: 0; }
+        .c1 { --i: 1; }
+        .c2 { --i: 2; }
+        .c3 { --i: 3; }
 
-    .glass {
-      position: absolute;
-      --w: 0.5vmin;
-      inset: calc(var(--p) - var(--w));
-      border-radius: 50%;
-      backdrop-filter: blur(1.3vmin);
-      box-shadow: 0 0 8vmin rgba(0, 0, 0, 0.3);
-      background: radial-gradient(10vmin at 70% 30%, rgba(255, 255, 255, 0.7), transparent);
-      z-index: 30;
-    }
+        .glass {
+            position: absolute;
+            --w: 0.5vmin;
+            inset: calc(var(--p) - var(--w));
+            border-radius: 50%;
+            backdrop-filter: blur(1.3vmin);
+            box-shadow: 0 0 8vmin rgba(0, 0, 0, 0.3);
+            background: radial-gradient(10vmin at 70% 30%, rgba(255, 255, 255, 0.7), transparent);
+            z-index: 30;
+        }
 
-    .glass > div {
-      position: absolute;
-      inset: 0;
-      --c: rgba(255, 255, 255, 0.03);
-      --w: 0.0625rem;
-      --g: 0.1875rem;
-      background: repeating-linear-gradient(var(--c), var(--c), var(--w), transparent var(--w), transparent calc(var(--w) + var(--g)));
-      border-radius: inherit;
-      border: 1vmin rgba(255, 255, 255, 0.1) solid;
-    }
+        .assistant-title {
+            position: absolute;
+            top: calc(40% + 25vmin);
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10;
+            width: 100%;
+        }
 
-    .rings {
-      aspect-ratio: 1;
-      border-radius: 50%;
-      position: absolute;
-      inset: 0;
-      perspective: 11rem;
-      opacity: 0.9;
-    }
+        .assistant-title h1 {
+            font-size: clamp(24px, 3.5vw, 58px);
+            color: #e7e7fb;
+            margin: 0;
+            text-shadow: 0 0 1.5vmin rgba(109,103,200,0.8);
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap');
-  </style>
+        .assistant-title p {
+            font-size: clamp(14px, 1.5vw, 24px);
+            color: #b6a9f8;
+            margin: 0.5rem 0 0;
+            opacity: 0.9;
+            font-weight: 300;
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
 </head>
 <body>
 
-  <div class="ai">
-    <div class="container">
-      <div class="c c4" style="opacity: 0.9; width: 10vmin; background: #6d67c8; animation: ai 5.5s cubic-bezier(0.39, -0.03, 0.75, 0.47) infinite;"></div>
-      <div class="c c1" style="opacity: 0.9; width: 16vmin; background: radial-gradient(50% 50% at center, #c979ee, #74bcd6); --x: 1vmin; animation: ai 5.5s cubic-bezier(0.12, 0.32, 0.68, 0.24) infinite;"></div>
-      <div class="c c2" style="opacity: 0.9; width: 15vmin; background: radial-gradient(50% 50% at center, #ef788c, #e7e7fb); animation: ai 5.5s cubic-bezier(0.45, -0.35, 0.16, 1.5) infinite;"></div>
-      <div class="c c3" style="opacity: 0.6; width: 5vmin; background: radial-gradient(50% 50% at center, #eb7fc6, transparent); --x: -1vmin; animation: ai 5.5s cubic-bezier(0.45, -0.35, 0.16, 1.5) infinite;"></div>
-      <div class="rings"></div>
+<div class="ml-ai-wrapper">
+
+    <!-- Animation Container (Top Layer) -->
+    <div class="ai" style="--s: 40vmin; --p: calc(var(--s) / 4);">
+        <div class="container">
+            <div class="c c4" style="opacity: 0.9; background: #6d67c8; animation: ai 5.5s cubic-bezier(0.39, -0.03, 0.75, 0.47) infinite;"></div>
+            <div class="c c1" style="opacity: 0.9; background: radial-gradient(50% 50% at center, #c979ee, #74bcd6); animation: ai 5.5s cubic-bezier(0.12, 0.32, 0.68, 0.24) infinite;"></div>
+            <div class="c c2" style="opacity: 0.9; background: radial-gradient(50% 50% at center, #ef788c, #e7e7fb); animation: ai 5.5s cubic-bezier(0.45, -0.35, 0.16, 1.5) infinite;"></div>
+            <div class="c c3" style="opacity: 0.6; background: radial-gradient(50% 50% at center, #eb7fc6, transparent); animation: ai 5.5s cubic-bezier(0.45, -0.35, 0.16, 1.5) infinite;"></div>
+            <div class="rings" style="position: absolute; inset: 0; perspective: 11rem; opacity: 0.9;"></div>
+        </div>
+        <div class="glass"></div>
     </div>
-    <div class="glass">
-      <div></div>
+
+    <!-- Title & Subtitle (Positioned BELOW Animation) -->
+    <div class="assistant-title">
+        <h1>< SynthIA ></h1>
+        <p class="subtitle">Asistente Empresarial Impulsada con IA</p>
     </div>
-  </div>
 
-  <script>
-    (function () {
-      if (CSS && CSS.registerProperty) {
-        CSS.registerProperty({ name: '--a', syntax: '<angle>', inherits: true, initialValue: '0deg' });
-        CSS.registerProperty({ name: '--l', syntax: '<number>', inherits: true, initialValue: '0' });
-        CSS.registerProperty({ name: '--o', syntax: '<number>', inherits: false, initialValue: '1' });
-      }
+</div>
 
-      const circles = document.querySelectorAll('.c');
-      const count = circles.length;
-      document.documentElement.style.setProperty('--count', count);
-      document.documentElement.style.setProperty('--radius', '6vmin');
+<script>
+    (function() {
+        // Register custom properties for animation
+        try {
+            if (CSS && CSS.registerProperty) {
+                CSS.registerProperty({
+                    name: '--a',
+                    syntax: '<angle>',
+                    inherits: true,
+                    initialValue: '0deg'
+                });
+                CSS.registerProperty({
+                    name: '--l',
+                    syntax: '<number>',
+                    inherits: true,
+                    initialValue: '0'
+                });
+                CSS.registerProperty({
+                    name: '--o',
+                    syntax: '<number>',
+                    inherits: false,
+                    initialValue: '0'
+                });
+            }
+        } catch (e) { console.log('CSS Houdini not supported'); }
 
-      let audioContext, analyser, dataArray;
+        // Animation logic
+        const circles = document.querySelectorAll('.c');
+        const count = circles.length;
+        document.documentElement.style.setProperty('--count', count);
+        document.documentElement.style.setProperty('--radius', '6vmin');
 
-      function startMicInput() {
-        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-          audioContext = new (window.AudioContext || window.webkitAudioContext)();
-          analyser = audioContext.createAnalyser();
-          const source = audioContext.createMediaStreamSource(stream);
-          source.connect(analyser);
-          analyser.fftSize = 256;
-          dataArray = new Uint8Array(analyser.frequencyBinCount);
+        // Setup microphone input for animation update
+        let audioContext, analyser, microphoneStream;
 
-          visualize();
-        }).catch(err => {
-          console.error('Microphone access denied or failed:', err);
-        });
-      }
+        function initAudio() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 256;
 
-      function visualize() {
-        const container = document.querySelector('.ai');
-        function update() {
-          analyser.getByteFrequencyData(dataArray);
-          const avg = dataArray.reduce((a, b) => a + b) / dataArray.length;
-
-          container.style.setProperty('--l', avg / 100);
-          container.style.setProperty('--radius', `${6 + (avg / 15)}vmin`);
-          container.style.filter = `drop-shadow(0 0 ${avg / 10}px rgba(109,103,200,${avg / 100}))`;
-
-          requestAnimationFrame(update);
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(function(stream) {
+                        microphoneStream = stream;
+                        const source = audioContext.createMediaStreamSource(microphoneStream);
+                        source.connect(analyser);
+                        analyser.connect(audioContext.destination);
+                        startVisualization();
+                    })
+                    .catch(function(err) {
+                        console.error("Microphone access denied: ", err);
+                    });
+            } catch (e) {
+                console.log('Audio not supported', e);
+            }
         }
-        update();
-      }
 
-      // Start on load
-      window.addEventListener('DOMContentLoaded', startMicInput);
+        function startVisualization() {
+            const dataArray = new Uint8Array(analyser.frequencyBinCount);
+            const container = document.querySelector('.ai');
+
+            function update() {
+                analyser.getByteFrequencyData(dataArray);
+                const avg = dataArray.reduce((a, b) => a + b) / dataArray.length;
+
+                container.style.setProperty('--l', avg/100);
+                container.style.setProperty('--radius', ${6 + (avg/15)}vmin);
+                container.style.filter = `drop-shadow(0 0 ${avg/10}px rgba(109,103,200,${avg/100}))`;
+
+                requestAnimationFrame(update);
+            }
+            update();
+        }
+
+        initAudio();
     })();
-  </script>
+</script>
 
 </body>
 </html>
