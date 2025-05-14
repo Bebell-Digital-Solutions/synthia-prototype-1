@@ -1,70 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Circle Animation</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Voice Reactive Animation</title>
   <style>
+    @keyframes ai {
+      from { --a: 360deg; --l: 0.35; --o: 1; }
+      30% { --l: 1.5; }
+      70% { --o: 0.4; --l: 0.05; }
+      98% { --o: 0.7; }
+      to { --a: 0deg; --l: 0.35; --o: 1; }
+    }
+
+    .c {
+      --offset-per-item: calc(360deg / var(--count));
+      --current-angle-offset: calc(var(--offset-per-item) * var(--i) + var(--a));
+      translate: calc(cos(var(--current-angle-offset)) * var(--radius) + var(--x, 0)) calc(sin(var(--current-angle-offset)) * var(--radius) * -1);
+      scale: calc(0.6 + var(--l));
+      opacity: var(--o, 1);
+      transition: opacity 0.3s linear;
+    }
+
+    .c4 { --i: 0; }
+    .c1 { --i: 1; }
+    .c2 { --i: 2; }
+    .c3 { --i: 3; }
+
     body {
       margin: 0;
-      padding: 0;
-      background: #0d0d0d;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background: #211f28;
+      display: grid;
+      place-items: center;
       height: 100vh;
-      font-family: 'Poppins', sans-serif;
-      overflow: hidden;
     }
 
     .ai {
+      --s: 40vmin;
+      --p: calc(var(--s) / 4);
+      --bg-color: rgba(123, 123, 244, 0.1);
+      width: var(--s);
+      aspect-ratio: 1;
+      background: radial-gradient(60% 75% at center, var(--bg-color) 50%, transparent 50%),
+                  radial-gradient(75% 60% at center, var(--bg-color) 50%, transparent 50%);
+      padding: var(--p);
       position: relative;
-      width: 160px;
-      height: 160px;
-      background: linear-gradient(145deg, #3e1f91, #6e3ff5);
       border-radius: 50%;
-      box-shadow: 0 0 25px rgba(179, 103, 255, 0.6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      font-size: 28px;
-      font-weight: 600;
-      text-transform: uppercase;
-      cursor: pointer;
+    }
+
+    .container {
       overflow: hidden;
+      background: #b6a9f8;
+      width: 100%;
+      border-radius: 50%;
+      aspect-ratio: 1;
+      position: relative;
+      display: grid;
+      place-items: center;
     }
 
-    .ai::before {
-      content: '';
+    .glass {
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
-        120deg,
-        rgba(255, 255, 255, 0.2) 0%,
-        rgba(255, 255, 255, 0.5) 50%,
-        rgba(255, 255, 255, 0.2) 100%
-      );
-      transform: rotate(0deg);
-      animation: shine 3s linear infinite;
-      opacity: 0.6;
+      --w: 0.5vmin;
+      inset: calc(var(--p) - var(--w));
+      border-radius: 50%;
+      backdrop-filter: blur(1.3vmin);
+      box-shadow: 0 0 8vmin rgba(0, 0, 0, 0.3);
+      background: radial-gradient(10vmin at 70% 30%, rgba(255, 255, 255, 0.7), transparent);
+      z-index: 30;
     }
 
-    @keyframes shine {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
+    .glass > div {
+      position: absolute;
+      inset: 0;
+      --c: rgba(255, 255, 255, 0.03);
+      --w: 0.0625rem;
+      --g: 0.1875rem;
+      background: repeating-linear-gradient(var(--c), var(--c), var(--w), transparent var(--w), transparent calc(var(--w) + var(--g)));
+      border-radius: inherit;
+      border: 1vmin rgba(255, 255, 255, 0.1) solid;
     }
+
+    .rings {
+      aspect-ratio: 1;
+      border-radius: 50%;
+      position: absolute;
+      inset: 0;
+      perspective: 11rem;
+      opacity: 0.9;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap');
   </style>
 </head>
 <body>
-  <div class="ai">AI</div>
+
+  <div class="ai">
+    <div class="container">
+      <div class="c c4" style="opacity: 0.9; width: 10vmin; background: #6d67c8; animation: ai 5.5s cubic-bezier(0.39, -0.03, 0.75, 0.47) infinite;"></div>
+      <div class="c c1" style="opacity: 0.9; width: 16vmin; background: radial-gradient(50% 50% at center, #c979ee, #74bcd6); --x: 1vmin; animation: ai 5.5s cubic-bezier(0.12, 0.32, 0.68, 0.24) infinite;"></div>
+      <div class="c c2" style="opacity: 0.9; width: 15vmin; background: radial-gradient(50% 50% at center, #ef788c, #e7e7fb); animation: ai 5.5s cubic-bezier(0.45, -0.35, 0.16, 1.5) infinite;"></div>
+      <div class="c c3" style="opacity: 0.6; width: 5vmin; background: radial-gradient(50% 50% at center, #eb7fc6, transparent); --x: -1vmin; animation: ai 5.5s cubic-bezier(0.45, -0.35, 0.16, 1.5) infinite;"></div>
+      <div class="rings"></div>
+    </div>
+    <div class="glass">
+      <div></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      if (CSS && CSS.registerProperty) {
+        CSS.registerProperty({ name: '--a', syntax: '<angle>', inherits: true, initialValue: '0deg' });
+        CSS.registerProperty({ name: '--l', syntax: '<number>', inherits: true, initialValue: '0' });
+        CSS.registerProperty({ name: '--o', syntax: '<number>', inherits: false, initialValue: '1' });
+      }
+
+      const circles = document.querySelectorAll('.c');
+      const count = circles.length;
+      document.documentElement.style.setProperty('--count', count);
+      document.documentElement.style.setProperty('--radius', '6vmin');
+
+      let audioContext, analyser, dataArray;
+
+      function startMicInput() {
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          analyser = audioContext.createAnalyser();
+          const source = audioContext.createMediaStreamSource(stream);
+          source.connect(analyser);
+          analyser.fftSize = 256;
+          dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+          visualize();
+        }).catch(err => {
+          console.error('Microphone access denied or failed:', err);
+        });
+      }
+
+      function visualize() {
+        const container = document.querySelector('.ai');
+        function update() {
+          analyser.getByteFrequencyData(dataArray);
+          const avg = dataArray.reduce((a, b) => a + b) / dataArray.length;
+
+          container.style.setProperty('--l', avg / 100);
+          container.style.setProperty('--radius', `${6 + (avg / 15)}vmin`);
+          container.style.filter = `drop-shadow(0 0 ${avg / 10}px rgba(109,103,200,${avg / 100}))`;
+
+          requestAnimationFrame(update);
+        }
+        update();
+      }
+
+      // Start on load
+      window.addEventListener('DOMContentLoaded', startMicInput);
+    })();
+  </script>
+
 </body>
 </html>
